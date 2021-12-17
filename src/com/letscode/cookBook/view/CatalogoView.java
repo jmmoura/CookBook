@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class CatalogoView {
     private final Receita NONE_FOUND = new Receita("Nenhuma receita encontrada", Categoria.PRATO_UNICO);
     private Receita receita;
-    Catalogo controller;
+    Catalogo controller = new Catalogo();
     private int curIndex = -1;
 
     private void showHeader() {
@@ -40,6 +40,19 @@ public class CatalogoView {
 
     private void add() {
         //TODO: Implement Add
+        NovaReceitaView novaReceitaView = new NovaReceitaView();
+        novaReceitaView.askNome();
+        novaReceitaView.askCategoria();
+        novaReceitaView.askTipoRendimento();
+        novaReceitaView.askQuantidadeRendimento();
+        novaReceitaView.askTempoPreparo();
+        novaReceitaView.askIngredientes();
+        novaReceitaView.askModoPreparo();
+
+        receita = novaReceitaView.getReceita();
+        controller.add(receita);
+
+        curIndex++;
     }
 
     private void del() {
@@ -49,18 +62,18 @@ public class CatalogoView {
     }
 
     public void show() {
-        showHeader();
-        showReceita(receita == null ? NONE_FOUND : receita);
-        ScreenUtil.printTextLine("", 80, true, '=');
-        ScreenUtil.printTextLine("P: Receita anterior", 80, true);
-        ScreenUtil.printTextLine("N: Receita seguinte", 80, true);
-        ScreenUtil.printTextLine("+: Adicionar nova receita", 80, true);
-        ScreenUtil.printTextLine("-: Remover receita", 80, true);
-        ScreenUtil.printTextLine("S: Pesquisar receita", 80, true);
-        ScreenUtil.printTextLine("", 80, true, '=');
-        ScreenUtil.printTextLine("#: ", 80);
-        String option;
         do {
+            showHeader();
+            showReceita(receita == null ? NONE_FOUND : receita);
+            ScreenUtil.printTextLine("", 80, true, '=');
+            ScreenUtil.printTextLine("P: Receita anterior", 80, true);
+            ScreenUtil.printTextLine("N: Receita seguinte", 80, true);
+            ScreenUtil.printTextLine("+: Adicionar nova receita", 80, true);
+            ScreenUtil.printTextLine("-: Remover receita", 80, true);
+            ScreenUtil.printTextLine("S: Pesquisar receita", 80, true);
+            ScreenUtil.printTextLine("", 80, true, '=');
+            ScreenUtil.printTextLine("#: ", 80);
+            String option;
             option = new Scanner(System.in).next();
             switch (option.toUpperCase()) {
                 case "P":

@@ -11,7 +11,7 @@ public class Receita {
     private int tempoPreparo;
     private Rendimento rendimento;
     private List<Ingrediente> ingredientes;
-    private String[] modoPreparo;
+    private String modoPreparo;
 
     public Receita(String nome, Categoria categoria) {
         this.ingredientes = new ArrayList<>();
@@ -55,17 +55,15 @@ public class Receita {
         return ingredientes;
     }
 
-    public void setIngredientes(Ingrediente[] ingredientes) {
-        for (Ingrediente item : ingredientes) {
-            this.ingredientes.add(item);
-        }
+    public void setIngredientes(List<Ingrediente> ingredientes) {
+        this.ingredientes = ingredientes;
     }
 
-    public String[] getModoPreparo() {
+    public String getModoPreparo() {
         return modoPreparo;
     }
 
-    public void setModoPreparo(String[] modoPreparo) {
+    public void setModoPreparo(String modoPreparo) {
         this.modoPreparo = modoPreparo;
     }
 
