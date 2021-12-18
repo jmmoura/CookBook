@@ -95,6 +95,7 @@ public class CatalogoView {
                     ScreenUtil.printTextLine("Opção inválida", 80);
                     ScreenUtil.printTextLine("#: ", 80);
             }
+            ScreenUtil.clearScreen();
         } while (true);
     }
 }

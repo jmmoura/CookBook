@@ -23,7 +23,7 @@ public class NovaReceitaView {
 
     public void askNome() {
         System.out.println("Qual o nome da receita?");
-        nome = scanner.nextLine();
+        nome = scanner.next();
         if (nome.isBlank()) {
             System.out.println("Nome inválido!");
             askNome();
@@ -33,7 +33,7 @@ public class NovaReceitaView {
     public void askCategoria() {
         System.out.println("Qual a categoria da receita?");
         for (Categoria cat : Categoria.values()) {
-            System.out.printf("%d - %s", cat.ordinal(), cat.name());
+            System.out.printf("%d - %s%n", cat.ordinal(), cat.name());
         }
         int categoria = scanner.nextInt();
         if (categoria < 0 || categoria >= Categoria.values().length) {
@@ -47,7 +47,7 @@ public class NovaReceitaView {
     public void askTipoRendimento() {
         System.out.println("Qual o tipo de rendimento?");
         for (TipoRendimento tipoRendimento : TipoRendimento.values()) {
-            System.out.printf("%d - %s", tipoRendimento.ordinal(), tipoRendimento.name());
+            System.out.printf("%d - %s%n", tipoRendimento.ordinal(), tipoRendimento.name());
         }
         int tipoRendimento = scanner.nextInt();
         if (tipoRendimento < 0 || tipoRendimento >= Categoria.values().length) {
@@ -82,29 +82,26 @@ public class NovaReceitaView {
     }
 
     public void askIngredientes() {
+        List<Ingrediente> ingredientes = new ArrayList<>();
+
         System.out.println("Adicione os ingredientes: ");
 
-        List<Ingrediente> ingredientes = new ArrayList<>();
-        scanner.nextLine();
-
-        String addNew = "n";
         do {
             System.out.println("Qual o nome do ingrediente?");
-            String nome = scanner.nextLine();
+            String nome = scanner.next();
             System.out.println("Qual a quantidade do ingrediente?");
             double quantidade = scanner.nextDouble();
             System.out.println("Qual o tipo de medida do ingrediente?");
             for (TipoMedida tipoMedida : TipoMedida.values()) {
-                System.out.printf("%d - %s", tipoMedida.ordinal(), tipoMedida.name());
+                System.out.printf("%d - %s%n", tipoMedida.ordinal(), tipoMedida.name());
             }
             int tipoMedida = scanner.nextInt();
 
             Ingrediente ingrediente = new Ingrediente(nome, quantidade, TipoMedida.values()[tipoMedida]);
             ingredientes.add(ingrediente);
 
-            scanner.nextLine();
             System.out.println("Deseja adicionar um novo ingrediente? y/N");
-            addNew = scanner.next();
+            String addNew = scanner.next();
 
             if(!addNew.equalsIgnoreCase("y"))
                 break;
@@ -118,11 +115,26 @@ public class NovaReceitaView {
     }
 
     public void askModoPreparo() {
-        scanner.nextLine();
+        List<String> modoPreparo = new ArrayList<>();
+
         System.out.println("Qual é o modo de preparo?");
-        String modoPreparo = scanner.nextLine();
-        if (modoPreparo.isBlank()) {
-            System.out.println("Modo de preparo inválido!");
+
+        int passo = 1;
+        do {
+            System.out.printf("Adicione o %dº passo: %n", passo);
+            modoPreparo.add(scanner.next());
+
+            System.out.println("Deseja adicionar um novo passo? y/N");
+            String addNew = scanner.next();
+
+            if(!addNew.equalsIgnoreCase("y"))
+                break;
+
+            passo++;
+        } while (true);
+
+        if (modoPreparo.isEmpty()) {
+            System.out.println("Modo de preparo precisa ter pelo menos um passo!");
             askModoPreparo();
         }
 
