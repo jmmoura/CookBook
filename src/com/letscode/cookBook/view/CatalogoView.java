@@ -36,6 +36,7 @@ public class CatalogoView {
     private void showSeguinte() {
         this.receita = controller.getReceita(curIndex + 1);
         if (receita != null) curIndex++;
+        else this.receita = controller.getReceita(curIndex);
     }
 
     private void add() {
@@ -53,12 +54,26 @@ public class CatalogoView {
         controller.add(receita);
 
         curIndex++;
+
+        System.out.println("Receita adicionada com sucesso!");
     }
 
     private void del() {
         if (curIndex >= 0) {
             controller.del(receita.getNome());
+            receita = controller.getReceita(0);
+            if (receita != null) curIndex = 0;
+            else curIndex = -1;
+
+            System.out.println("Receita removida com sucesso!");
         }
+    }
+
+    private void search() {
+        System.out.println("Informe uma palavra contida no nome da receita:");
+        receita = controller.getReceita(new Scanner(System.in).nextLine());
+        if (receita != null) curIndex = controller.getReceitaIndex(receita.getNome());
+        else receita = controller.getReceita(curIndex);
     }
 
     public void show() {
@@ -90,6 +105,7 @@ public class CatalogoView {
                     break;
                 case "S":
                     //TODO: Implement Search
+                    search();
                     break;
                 default:
                     ScreenUtil.printTextLine("Opção inválida", 80);

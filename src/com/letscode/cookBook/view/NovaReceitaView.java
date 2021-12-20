@@ -23,7 +23,7 @@ public class NovaReceitaView {
 
     public void askNome() {
         System.out.println("Qual o nome da receita?");
-        nome = scanner.next();
+        nome = scanner.nextLine();
         if (nome.isBlank()) {
             System.out.println("Nome inválido!");
             askNome();
@@ -33,7 +33,7 @@ public class NovaReceitaView {
     public void askCategoria() {
         System.out.println("Qual a categoria da receita?");
         for (Categoria cat : Categoria.values()) {
-            System.out.printf("%d - %s%n", cat.ordinal(), cat.name());
+            System.out.printf("%d - %s%n", cat.ordinal(), cat);
         }
         int categoria = scanner.nextInt();
         if (categoria < 0 || categoria >= Categoria.values().length) {
@@ -47,7 +47,7 @@ public class NovaReceitaView {
     public void askTipoRendimento() {
         System.out.println("Qual o tipo de rendimento?");
         for (TipoRendimento tipoRendimento : TipoRendimento.values()) {
-            System.out.printf("%d - %s%n", tipoRendimento.ordinal(), tipoRendimento.name());
+            System.out.printf("%d - %s%n", tipoRendimento.ordinal(), tipoRendimento);
         }
         int tipoRendimento = scanner.nextInt();
         if (tipoRendimento < 0 || tipoRendimento >= Categoria.values().length) {
@@ -71,7 +71,7 @@ public class NovaReceitaView {
     }
 
     public void askTempoPreparo() {
-        System.out.println("Quais a tempo de preparo em minutos?");
+        System.out.println("Qual o tempo de preparo em segundos?");
         int tempoPreparo = scanner.nextInt();
         if (tempoPreparo < 1) {
             System.out.println("Quantidade inválida!");
@@ -87,15 +87,16 @@ public class NovaReceitaView {
         System.out.println("Adicione os ingredientes: ");
 
         do {
+            scanner.nextLine();
             System.out.println("Qual o nome do ingrediente?");
-            String nome = scanner.next();
-            System.out.println("Qual a quantidade do ingrediente?");
-            double quantidade = scanner.nextDouble();
+            String nome = scanner.nextLine();
             System.out.println("Qual o tipo de medida do ingrediente?");
             for (TipoMedida tipoMedida : TipoMedida.values()) {
-                System.out.printf("%d - %s%n", tipoMedida.ordinal(), tipoMedida.name());
+                System.out.printf("%d - %s%n", tipoMedida.ordinal(), tipoMedida);
             }
             int tipoMedida = scanner.nextInt();
+            System.out.println("Qual a quantidade do ingrediente?");
+            double quantidade = scanner.nextDouble();
 
             Ingrediente ingrediente = new Ingrediente(nome, quantidade, TipoMedida.values()[tipoMedida]);
             ingredientes.add(ingrediente);
@@ -121,8 +122,9 @@ public class NovaReceitaView {
 
         int passo = 1;
         do {
+            scanner.nextLine();
             System.out.printf("Adicione o %dº passo: %n", passo);
-            modoPreparo.add(scanner.next());
+            modoPreparo.add(scanner.nextLine());
 
             System.out.println("Deseja adicionar um novo passo? y/N");
             String addNew = scanner.next();

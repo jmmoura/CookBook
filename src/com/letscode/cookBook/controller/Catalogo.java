@@ -31,7 +31,7 @@ public class Catalogo {
     public Receita getReceita(String nome) {
         if (nome != null && !nome.isBlank()) {
             for (Receita item : receitas) {
-                if (item.getNome().equalsIgnoreCase(nome)) {
+                if (item.getNome().contains(nome)) {
                     return item;
                 }
             }
@@ -44,6 +44,15 @@ public class Catalogo {
             return receitas.get(index);
         }
         return null;
+    }
+
+    public int getReceitaIndex(String nome) {
+        for (int i = 0; i < receitas.size(); i++) {
+            if (receitas.get(i).getNome().equalsIgnoreCase(nome)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public Receita getRandom() {

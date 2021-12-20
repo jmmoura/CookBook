@@ -27,7 +27,7 @@ public class Ingrediente {
 
     @Override
     public String toString() {
-        return String.format("%.3f %s %s", quantidade, tipoQuantidade, nome);
+        return String.format("%.2f %s de %s", quantidade, tipoQuantidade, nome);
     }
 
     @Override

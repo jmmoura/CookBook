@@ -14,9 +14,10 @@ public class Receita {
     private List<String> modoPreparo;
 
     public Receita(String nome, Categoria categoria) {
-        this.ingredientes = new ArrayList<>();
         this.nome = nome;
         this.categoria = categoria;
+        this.ingredientes = new ArrayList<>();
+        this.modoPreparo = new ArrayList<>();
     }
 
     public String getNome() {
@@ -84,12 +85,24 @@ public class Receita {
 
     @Override
     public String toString() {
-        int segundos = tempoPreparo % 60;
-        int minutos = tempoPreparo > 60 ? tempoPreparo % (60*60) : 0;
-        int horas = tempoPreparo > 60*60 ? tempoPreparo % (60*60*24) : 0;
-        String tempo = horas > 0 ? horas + " horas " : "";
-        tempo += minutos > 0 ? minutos + " minutos " : "";
-        tempo += segundos > 0 ? segundos + " segundos " : "";
-        return String.format("%s%n\t%s%n%nRendimento: %s%nTempo: %s%nIngredientes:%n%s%nModo de preparo:%n%s", nome, categoria, rendimento, tempo, ingredientes, modoPreparo);
+        int horas = tempoPreparo / (60*60);
+        int minutos = tempoPreparo % (60*60) / 60;
+        int segundos = tempoPreparo % (60*60) % 60;
+        String tempo = horas > 0 ? horas + " hora(s) " : "";
+        tempo += minutos > 0 ? minutos + " minuto(s) " : "";
+        tempo += segundos > 0 ? segundos + " segundo(s) " : "";
+
+        String ingredientes = "";
+        for (Ingrediente item : this.ingredientes) {
+            ingredientes += String.format("  - %s%n", item);
+        }
+
+        String modoPreparo = "";
+        for (int i = 0; i < this.modoPreparo.size(); i++) {
+            modoPreparo += String.format("  %d° passo:%n", i+1);
+            modoPreparo += String.format("  - %s%n", this.modoPreparo.get(i));
+        }
+
+        return String.format("%s%n\t%s%n%nRendimento: %s%nTempo: %s%nIngredientes:%n%sModo de preparo:%n%s", nome, categoria, rendimento, tempo, ingredientes, modoPreparo);
     }
 }
